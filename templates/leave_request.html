@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-blue-300 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="sidebar fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40">
+        <div class="p-6">
+            <h3 class="text-2xl font-bold mb-6">Employee Panel</h3>
+            <nav>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="{{ url_for('employee_dashboard') }}" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('leave_request') }}" class="block px-4 py-2 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg">
+                            Request Leave
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('payroll') }}" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">
+                            View Payroll
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('logout') }}" class="block px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col lg:ml-64 p-6 bg-gray-50">
+        <!-- Header -->
+        <button class="fixed top-4 left-4 bg-gray-800 text-white px-4 py-2 rounded-lg lg:hidden z-50" onclick="toggleSidebar()">☰</button>
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Create Leave Request</h1>
+        </header>
+        <!-- Leave Request Form -->
+        <section class="bg-white p-8 rounded-3xl shadow-md w-full max-w-xl mx-auto">
+            <div class="flex items-center space-x-5 mb-6">
+                <div class="h-14 w-14 bg-yellow-200 rounded-full flex justify-center items-center text-yellow-500 text-2xl font-mono">i</div>
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-700">Create Leave Request</h2>
+                    <p class="text-sm text-gray-500">Fill out the details to submit a leave request.</p>
+                </div>
+            </div>
+            <form method="POST" class="space-y-6">
+                <div class="flex flex-col">
+                    <label for="emp_id" class="block text-md font-medium text-gray-700">Employee ID</label>
+                    <input type="number" id="emp_id" name="emp_id" class="mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your employee ID">
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-col w-full">
+                        <label for="start_date" class="block text-md font-medium text-gray-700">Start Date</label>
+                        <input type="date" id="start_date" name="start_date" class="mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="flex flex-col w-full">
+                        <label for="end_date" class="block text-md font-medium text-gray-700">End Date</label>
+                        <input type="date" id="end_date" name="end_date" class="mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <label for="leave_type" class="block text-md font-medium text-gray-700">Leave Type</label>
+                    <select id="leave_type" name="leave_type" class="mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select leave type</option>
+                        <option value="Sick">Sick</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Earned">Earned</option>
+                    </select>
+                </div>
+                <div class="flex justify-between mt-6">
+                    <button type="reset" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">Submit Request</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+    </script>
+</body>
+</html>

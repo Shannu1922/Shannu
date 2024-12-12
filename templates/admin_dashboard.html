@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        html, body {
+          font-family: 'Poppins', sans-serif;
+        }
+      </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Sidebar Toggle Button -->
+<button class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg lg:hidden" onclick="toggleSidebar()">☰</button>
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="sidebar fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <div class="p-6">
+            <h3 class="text-2xl font-bold mb-6">Admin Panel</h3>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="#" class="block px-4 py-2 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg">Dashboard</a></li>
+                    <li><a href="/view_employees" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">View Employees</a></li>
+                    <li><a href="/manage_payroll" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">Manage Payroll</a></li>
+                    <li><a href="/manage_leaves" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">Manage Leaves</a></li>
+                    <li><a href="/logout" class="block px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 lg:ml-64 p-6">
+        <!-- Header -->
+        <header class="bg-white shadow-sm mb-6">
+            <div class="p-6">
+                <h1 class="text-3xl font-bold text-gray-800">Welcome, Admin!</h1>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-lg font-bold text-gray-700">Today's Money</h2>
+                <p class="text-gray-600">$53,000</p>
+                <p class="text-green-500">+55% than last week</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-lg font-bold text-gray-700">Today's Users</h2>
+                <p class="text-gray-600">2,300</p>
+                <p class="text-green-500">+3% than last month</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-lg font-bold text-gray-700">New Clients</h2>
+                <p class="text-gray-600">3,462</p>
+                <p class="text-red-500">-2% than yesterday</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-lg font-bold text-gray-700">Sales</h2>
+                <p class="text-gray-600">$103,430</p>
+                <p class="text-green-500">+5% than yesterday</p>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Employee Management Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Employee Management</h2>
+                <p class="text-gray-600 mb-4">Manage all employee details and records.</p>
+                <a href="/view_employees" class="block text-center bg-gradient-to-tr from-blue-600 to-blue-400 py-2 rounded-lg text-white hover:shadow-lg transition">View Employees</a>
+            </div>
+        
+            <!-- Payroll Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Payroll</h2>
+                <p class="text-gray-600 mb-4">View and manage employee payroll details.</p>
+                <a href="/manage_payroll" class="block text-center bg-gradient-to-tr from-blue-600 to-blue-400 py-2 rounded-lg text-white hover:shadow-lg transition">Manage Payroll</a>
+            </div>
+        
+            <!-- Leave Requests Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Leave Requests</h2>
+                <p class="text-gray-600 mb-4">Review and approve leave requests.</p>
+                <a href="/manage_leaves" class="block text-center bg-gradient-to-tr from-blue-600 to-blue-400 py-2 rounded-lg text-white hover:shadow-lg transition">Manage Leaves</a>
+            </div>
+        </div>
+        
+        <!-- Chart Section -->
+        <div class="grid grid-cols-2 gap-4 mt-10 bg-white rounded-lg shadow-lg p-6">
+            <!-- Doughnut Chart -->
+            <div class="flex flex-col items-center">
+                <h2 class="text-sm font-bold text-gray-800 mb-2">Payroll Overview</h2>
+                <canvas id="doughnutChart" width="200" height="200"></canvas>
+            </div>
+        
+            <!-- Bar Chart -->
+            <div class="flex flex-col items-center">
+                <h2 class="text-sm font-bold text-gray-800 mb-2">Employee Statistics</h2>
+                <canvas id="barChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+               
+
+        </div>
+    </main>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('-translate-x-full');
+    }
+    
+    // Doughnut Chart
+    const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+    new Chart(doughnutCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Paid', 'Pending', 'Overdue'],
+            datasets: [{
+                data: [60, 30, 10], // Replace with real data
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 205, 86, 0.6)',
+                    'rgba(255, 99, 132, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: ['January', 'February', 'March', 'April'], // Replace with real labels
+            datasets: [{
+                label: 'Earnings',
+                data: [5000, 8000, 6000, 9000], // Replace with real data
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

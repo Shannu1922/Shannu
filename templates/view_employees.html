@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        html, body {
+          font-family: 'Poppins', sans-serif;
+        }
+      </style>
+</head>
+
+<body class="min-h-screen bg-gray-100 font-sans text-base text-gray-800">
+
+    <!-- Sidebar Toggle Button -->
+    <button class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg lg:hidden" onclick="toggleSidebar()">☰</button>
+
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside class="sidebar fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6">
+                <h3 class="text-lg font-bold mb-6">Admin Panel</h3>
+                <nav>
+                    <ul class="space-y-4">
+                        <li><a href="/admin_dashboard" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">Dashboard</a></li>
+                        <li><a href="/view_employees" class="block px-4 py-2 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg text-md">View Employees</a></li>
+                        <li><a href="/manage_payroll" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">Manage Payroll</a></li>
+                        <li><a href="/manage_leaves" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">Manage Leaves</a></li>
+                        <li><a href="/logout" class="block px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-md">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-6">
+            <!-- Header -->
+            <header class="mb-6">
+                <h1 class="text-xl font-bold">Employee List</h1>
+            </header>
+
+            <!-- Employee List Section -->
+            <section class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-lg font-semibold mb-4">Employee Details</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse text-md text-left">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200">Employee ID</th>
+                                <th class="py-2 px-4 border-b border-gray-200">First Name</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Last Name</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Email</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Phone</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in employees %}
+                                <tr class="hover:bg-gray-100">
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.id }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.first_name }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.last_name }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.email }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.phone }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ employee.position }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+    </script>
+
+</body>
+</html>

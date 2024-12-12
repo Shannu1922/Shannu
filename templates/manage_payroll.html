@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Payroll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="min-h-screen bg-gray-100 font-sans text-gray-800">
+    <!-- Sidebar Toggle Button -->
+    <button class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg lg:hidden" onclick="toggleSidebar()">☰</button>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="sidebar fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6">
+                <h3 class="text-lg font-bold mb-6">Admin Panel</h3>
+                <nav>
+                    <ul class="space-y-4">
+                        <li><a href="/admin_dashboard" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">Dashboard</a></li>
+                        <li><a href="/view_employees" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">View Employees</a></li>
+                        <li><a href="/manage_payroll" class="block px-4 py-2 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg text-md">Manage Payroll</a></li>
+                        <li><a href="/manage_leaves" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-md">Manage Leaves</a></li>
+                        <li><a href="/logout" class="block px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-md">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-6">
+            <!-- Header -->
+            <header class="mb-6">
+                <h1 class="text-xl font-bold">Employee Payroll Management</h1>
+            </header>
+
+            <!-- Payroll Management Section -->
+            <section class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-lg font-semibold mb-4">Payroll Details</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse text-md text-left">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200">Payroll ID</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Employee Name</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Basic Salary</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Bonuses</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Deductions</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Net Salary</th>
+                                <th class="py-2 px-4 border-b border-gray-200">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payroll in payroll_data %}
+                                <tr class="hover:bg-gray-100">
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.payroll_id }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.employee.first_name }} {{ payroll.employee.last_name }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.basic_salary }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.bonuses }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.deductions }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ payroll.net_salary }}</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">
+                                        <form method="POST" action="{{ url_for('manage_payroll') }}" class="flex space-x-2">
+                                            <input type="hidden" name="payroll_id" value="{{ payroll.payroll_id }}">
+                                            <button type="submit" name="action" value="edit" class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Edit</button>
+                                            <button type="submit" name="action" value="delete" class="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-500 transition">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+    </script>
+
+</body>
+</html>

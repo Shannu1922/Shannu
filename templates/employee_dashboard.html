@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Sidebar Toggle Button -->
+    <button class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg lg:hidden" onclick="toggleSidebar()">☰</button>
+
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside class="sidebar fixed inset-y-0 left-0 w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6">
+                <h3 class="text-2xl font-bold mb-6">Employee Panel</h3>
+                <nav>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="{{ url_for('employee_dashboard') }}" class="block px-4 py-2 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-lg">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('leave_request') }}" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">
+                                Request Leave
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('payroll') }}" class="block px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">
+                                View Payroll
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('logout') }}" class="block px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-6">
+            <!-- Header -->
+            <header class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Welcome, Employee!</h1>
+            </header>
+
+            <!-- Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Request Leave Card -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Request Leave</h2>
+                    <p class="text-gray-600 mb-4">Submit your leave requests for approval.</p>
+                    <a href="{{ url_for('leave_request') }}" class="block text-center bg-gradient-to-tr from-blue-600 to-blue-400 py-2 rounded-lg text-white hover:shadow-lg transition">Request Leave</a>
+                </div>
+
+                <!-- View Payroll Card -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">View Payroll</h2>
+                    <p class="text-gray-600 mb-4">Access and view your payroll details.</p>
+                    <a href="{{ url_for('payroll') }}" class="block text-center bg-gradient-to-tr from-blue-600 to-blue-400 py-2 rounded-lg text-white hover:shadow-lg transition">View Payroll</a>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+    </script>
+
+</body>
+</html>
