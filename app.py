@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 # Configure the MySQL database connection
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Surya%402002@localhost/payroll'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Shannu%401922@localhost/payroll'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '1922'  # Change this to a strong secret key
 
